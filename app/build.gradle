@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'io.github.cbmcalculatorai'
+    namespace 'io.github.cbmcalculav12'
     compileSdk 34
 
     defaultConfig {
-        applicationId "io.github.cbmcalculatorai"
+        applicationId "io.github.cbmcalculav12"
         minSdk 24
         targetSdk 34
         versionCode 1

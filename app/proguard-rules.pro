@@ -3,4 +3,4 @@
 -keepclassmembers class * {
     @android.webkit.JavascriptInterface <methods>;
 }
--keep class io.github.cbmcalculatorai.** { *; }
+-keep class io.github.cbmcalculav12.** { *; }

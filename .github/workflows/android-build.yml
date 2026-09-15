@@ -51,6 +51,6 @@ jobs:
           echo "============================================"
           echo "✅ Android APK successfully compiled!"
           echo "App Name: CBM Calculator · Air & Cargo"
-          echo "Package ID: io.github.cbmcalculatorai"
+          echo "Package ID: io.github.cbmcalculav12"
           echo "Target Version: 1.0.0 (1)"
           echo "============================================"
