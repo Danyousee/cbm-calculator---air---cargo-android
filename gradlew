@@ -11,6 +11,12 @@ if [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ]; then
     JAVACMD="$JAVA_HOME/bin/java"
 fi
 
+# Ensure gradle-wrapper.jar is present
+if [ ! -f "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" ]; then
+    mkdir -p "$APP_HOME/gradle/wrapper"
+    curl -sSL -o "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar" 2>/dev/null ||     wget -q -O "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar" 2>/dev/null || true
+fi
+
 # Fallback to system gradle if jar is not present
 if [ ! -f "$APP_HOME/gradle/wrapper/gradle-wrapper.jar" ]; then
     if command -v gradle >/dev/null 2>&1; then

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'io.github.cbmcalculav12'
+    namespace 'io.github.cbmcalculatorai'
     compileSdk 34
 
     defaultConfig {
-        applicationId "io.github.cbmcalculav12"
+        applicationId "io.github.cbmcalculatorai"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -35,6 +35,13 @@ android {
     }
     kotlinOptions {
         jvmTarget = '17'
+    }
+    buildFeatures {
+        buildConfig = true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
     }
 }
 

@@ -18,6 +18,10 @@ if defined JAVA_HOME (
 )
 
 if not exist "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" (
+    powershell -Command "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; (New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar', '%APP_HOME%\gradle\wrapper\gradle-wrapper.jar')" 2>nul
+)
+
+if not exist "%APP_HOME%\gradle\wrapper\gradle-wrapper.jar" (
     where gradle >nul 2>nul
     if %ERRORLEVEL% equ 0 (
         gradle %*

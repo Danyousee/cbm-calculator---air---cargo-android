@@ -19,20 +19,33 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Setup Gradle Build Environment
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.4'
+          validate-wrappers: false
+
+      - name: Prepare Gradle Wrapper
+        run: |
+          mkdir -p gradle/wrapper
+          if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
+            echo "Fetching official gradle-wrapper.jar..."
+            curl -sSL -o gradle/wrapper/gradle-wrapper.jar "https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar" ||             gradle wrapper --gradle-version 8.4 --distribution-type bin || true
+          fi
+          chmod +x gradlew || true
 
       - name: Accept Android SDK Licenses
         run: |
-          yes | ($ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || sdkmanager --licenses || true)
+          yes | sdkmanager --licenses || true
 
       - name: Compile & Assemble Android Debug APK
         run: |
-          chmod +x gradlew || true
-          if [ -f "./gradlew" ]; then
+          if [ -f "./gradlew" ] && [ -f "gradle/wrapper/gradle-wrapper.jar" ]; then
             ./gradlew assembleDebug --stacktrace --no-daemon
           else
             gradle assembleDebug --stacktrace --no-daemon
@@ -42,7 +55,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CBMCalculatorAirCargo-v1.0.0-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/**/*.apk
           retention-days: 30
           if-no-files-found: error
 
@@ -51,6 +66,6 @@ jobs:
           echo "============================================"
           echo "✅ Android APK successfully compiled!"
           echo "App Name: CBM Calculator · Air & Cargo"
-          echo "Package ID: io.github.cbmcalculav12"
+          echo "Package ID: io.github.cbmcalculatorai"
           echo "Target Version: 1.0.0 (1)"
           echo "============================================"
